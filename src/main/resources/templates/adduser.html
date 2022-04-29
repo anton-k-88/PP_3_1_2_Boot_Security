@@ -27,7 +27,7 @@
         <tr>
             <td>Фамилия</td>
             <td>:</td>
-            <td><input type="text" th:field="*{lastName}" /></td>
+            <td><input type="text" th:field="*{lastName}"/></td>
         </tr>
         <tr>
             <td>Пол</td>
@@ -47,6 +47,20 @@
             <td>E-mail</td>
             <td>:</td>
             <td><input type="email" th:field="*{email}"/></td>
+        </tr>
+        <tr>
+            <td>Роль</td>
+            <td>:</td>
+            <td>
+                <select th:field="*{role}" multiple>
+                    <option th:each="rol : ${roles}"
+                            th:value="${rol.getId()}"
+                            th:text="${rol.getRoleName()}">
+                    </option>
+                </select>
+                </option>
+                </select>
+            </td>
         </tr>
     </table>
     <button type="submit" name="action" value="cancel">Отмена</button>

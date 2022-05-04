@@ -14,6 +14,11 @@
         <td th:utext="${user.id}"></td>
     </tr>
     <tr>
+        <td>E-mail</td>
+        <td>:</td>
+        <td th:utext="${user.email}"></td>
+    </tr>
+    <tr>
         <td>Имя</td>
         <td>:</td>
         <td th:utext="${user.firstName}"></td>
@@ -32,11 +37,6 @@
         <td>Телефон</td>
         <td>:</td>
         <td th:utext="${user.phoneNo}"></td>
-    </tr>
-    <tr>
-        <td>E-mail</td>
-        <td>:</td>
-        <td th:utext="${user.email}"></td>
     </tr>
 </table>
 <form th:action="@{/delete/{userId}(userId=${user.id})}" th:object="${user}" th:method="POST">

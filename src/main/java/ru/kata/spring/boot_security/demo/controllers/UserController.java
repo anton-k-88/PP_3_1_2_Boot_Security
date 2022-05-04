@@ -12,12 +12,15 @@ import ru.kata.spring.boot_security.demo.repository.RoleCrudRepository;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 @Controller
-public class userController {
-@Autowired
+public class UserController {
     private UserService userService;
-@Autowired
-private RoleCrudRepository roleCrudRepository;
+    private RoleCrudRepository roleCrudRepository;
 
+    @Autowired
+    public UserController(UserService userService, RoleCrudRepository roleCrudRepository) {
+        this.userService = userService;
+        this.roleCrudRepository = roleCrudRepository;
+    }
 
     @GetMapping("/admin")
     public ModelAndView usersPage() {
@@ -29,7 +32,7 @@ private RoleCrudRepository roleCrudRepository;
 
     @GetMapping("/user")
     public ModelAndView userPage(@AuthenticationPrincipal User user) {
- //       Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        //       Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("user");
         modelAndView.addObject("user", user);
@@ -69,7 +72,7 @@ private RoleCrudRepository roleCrudRepository;
         return modelAndView;
     }
 
-    @PostMapping ("/add")
+    @PostMapping("/add")
     public ModelAndView userAdd(@ModelAttribute("user") User user,
                                 @RequestParam(value = "action") String action) {
         ModelAndView modelAndView = new ModelAndView();

@@ -16,15 +16,14 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
+    private String email;
+    @Column(nullable = false)
+    private String password;
     private String firstName;
     private String lastName;
     private Gender gender;
     private String phoneNo;
-    private String email;
-    @Column(nullable = false)
-    private String username;
-    @Column(nullable = false)
-    private String password;
     @Column
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;
@@ -32,13 +31,8 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String firstName, String lastName, Gender gender) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.gender = gender;
-    }
 
-    public User(String firstName, String lastName, Gender gender, String phoneNo, String email) {
+    public User(String email, String firstName, String lastName, Gender gender, String phoneNo) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
@@ -47,14 +41,13 @@ public class User implements UserDetails {
     }
 
 
-    public User(String firstName, String lastName, Gender gender, String phoneNo, String email,
-                String username, String password, List<Role> roles) {
+    public User(String email, String password, String firstName, String lastName, Gender gender, String phoneNo,
+                 List<Role> roles) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
         this.phoneNo = phoneNo;
         this.email = email;
-        this.username = username;
         this.password = password;
         this.roles = roles;
     }
@@ -111,10 +104,6 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -135,10 +124,6 @@ public class User implements UserDetails {
         return true;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRole();
@@ -146,6 +131,11 @@ public class User implements UserDetails {
 
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return getEmail();
     }
 
     public void setPassword(String password) {
